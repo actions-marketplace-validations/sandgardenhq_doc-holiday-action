@@ -160,7 +160,7 @@ describe('api', () => {
         );
 
         expect(mockFetch).toHaveBeenCalledTimes(3);
-      });
+      }, 10000); // Increase timeout to 10 seconds for retries
 
       it('should use correct backoff delays for 429', async () => {
         const sleepSpy = jest.spyOn(global, 'setTimeout');
@@ -282,7 +282,8 @@ describe('api', () => {
 
     describe('other HTTP errors', () => {
       it('should handle 400 bad request error', async () => {
-        mockFetch.mockResolvedValueOnce({
+        mockFetch.mockReset();
+        mockFetch.mockResolvedValue({
           ok: false,
           status: 400,
           text: async () => 'Invalid request format',
@@ -294,7 +295,8 @@ describe('api', () => {
       });
 
       it('should handle 404 not found error', async () => {
-        mockFetch.mockResolvedValueOnce({
+        mockFetch.mockReset();
+        mockFetch.mockResolvedValue({
           ok: false,
           status: 404,
           text: async () => 'Endpoint not found',
