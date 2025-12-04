@@ -1,17 +1,20 @@
 // __tests__/index.test.ts
 import * as core from '@actions/core';
-import { parseInputs } from '../src/inputs';
-import { getSmartDefaults, inferSourceConnection } from '../src/github-context';
-import { buildChanges } from '../src/changes';
-import { createJob, constructJobUrl } from '../src/api';
 import { ActionInputs, SmartDefaults, DocHolidayRequest, DocHolidayResponse } from '../src/types';
 
-// Mock all modules
+// Mock all modules BEFORE importing them
 jest.mock('@actions/core');
 jest.mock('../src/inputs');
 jest.mock('../src/github-context');
 jest.mock('../src/changes');
 jest.mock('../src/api');
+
+// Import after mocking
+import { parseInputs } from '../src/inputs';
+import { getSmartDefaults, inferSourceConnection } from '../src/github-context';
+import { buildChanges } from '../src/changes';
+import { createJob, constructJobUrl } from '../src/api';
+import { run } from '../src/index';
 
 // Create typed mocks
 const mockCore = core as jest.Mocked<typeof core>;
@@ -22,27 +25,9 @@ const mockBuildChanges = buildChanges as jest.MockedFunction<typeof buildChanges
 const mockCreateJob = createJob as jest.MockedFunction<typeof createJob>;
 const mockConstructJobUrl = constructJobUrl as jest.MockedFunction<typeof constructJobUrl>;
 
-// Import run function dynamically to ensure mocks are set up first
-let run: () => Promise<void>;
-
 describe('index.ts - main orchestration', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     jest.clearAllMocks();
-
-    // Reset module registry to get fresh instance
-    jest.resetModules();
-
-    // Re-setup mocks
-    jest.mock('@actions/core');
-    jest.mock('../src/inputs');
-    jest.mock('../src/github-context');
-    jest.mock('../src/changes');
-    jest.mock('../src/api');
-
-    // Import the run function
-    const indexModule = await import('../src/index');
-    // The module exports the run function via direct execution, so we need to get it
-    // For testing purposes, we'll need to structure our index.ts to export the run function
   });
 
   describe('Smart Mode: Release', () => {
@@ -73,7 +58,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-123');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -132,7 +116,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-456');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -180,7 +163,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-789');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -223,7 +205,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-custom-123');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -262,7 +243,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-undefined-123');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -305,7 +285,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-with-options');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -344,7 +323,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-no-event');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -375,7 +353,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-custom-conn');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -416,7 +393,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-changeset');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -459,7 +435,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-no-changes');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -491,7 +466,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-no-changeset');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -508,7 +482,6 @@ describe('index.ts - main orchestration', () => {
       });
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -531,7 +504,6 @@ describe('index.ts - main orchestration', () => {
       });
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -553,7 +525,6 @@ describe('index.ts - main orchestration', () => {
       mockCreateJob.mockRejectedValue(error);
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -574,7 +545,6 @@ describe('index.ts - main orchestration', () => {
       mockCreateJob.mockRejectedValue('string error');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -599,7 +569,6 @@ describe('index.ts - main orchestration', () => {
       mockGetSmartDefaults.mockReturnValue(mockSmartDefaults);
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -624,7 +593,6 @@ describe('index.ts - main orchestration', () => {
       mockGetSmartDefaults.mockReturnValue(mockSmartDefaults);
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -654,7 +622,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-output-123');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -685,7 +652,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-log-123');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
@@ -724,7 +690,6 @@ describe('index.ts - main orchestration', () => {
       mockConstructJobUrl.mockReturnValue('https://app.doc.holiday/jobs/job-log-456');
 
       // Act
-      const { run } = await import('../src/index');
       await run();
 
       // Assert
