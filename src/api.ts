@@ -52,7 +52,7 @@ export async function createJob(
         );
       }
 
-      const data = await response.json();
+      const data = await response.json() as DocHolidayResponse;
       core.info(`Job created successfully: ${data.id}`);
       return data;
     } catch (error) {
