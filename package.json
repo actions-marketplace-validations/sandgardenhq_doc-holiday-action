@@ -1,7 +1,7 @@
 {
   "name": "doc-holiday-action",
   "version": "1.0.0",
-  "description": "GitHub Action for doc.holiday integration",
+  "description": "GitHub Action to automatically generate release notes and documentation using doc.holiday",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -10,13 +10,23 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/doc-holiday-action.git"
+  },
   "keywords": [
-    "github-action",
-    "doc.holiday",
-    "documentation"
+    "github-actions",
+    "documentation",
+    "release-notes",
+    "doc-holiday",
+    "automation"
   ],
-  "author": "",
+  "author": "Your Name",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/your-username/doc-holiday-action/issues"
+  },
+  "homepage": "https://github.com/your-username/doc-holiday-action#readme",
   "devDependencies": {
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.6",
