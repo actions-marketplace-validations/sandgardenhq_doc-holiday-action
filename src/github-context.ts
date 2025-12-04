@@ -34,6 +34,7 @@ function getReleaseDefaults(context: typeof github.context): SmartDefaults {
     title: `Release notes for ${tagName}`,
     body,
     eventType: 'release',
+    changes: [{ releases: { count: 1 } }],
   };
 }
 
@@ -55,10 +56,17 @@ function getMergeDefaults(context: typeof github.context): SmartDefaults {
   const prTitle = pr.title;
   const body = pr.body || '';
 
+  // Extract PR commit range for changeset
+  const baseSha = pr.base?.sha;
+  const headSha = pr.head?.sha;
+
   return {
     title: `Documentation for PR #${prNumber}: ${prTitle}`,
     body,
     eventType: 'merge',
+    changes: baseSha && headSha
+      ? [{ commits: { startSha: baseSha, endSha: headSha, includeStartCommit: true } }]
+      : undefined,
   };
 }
 

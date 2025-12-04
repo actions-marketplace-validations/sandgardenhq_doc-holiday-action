@@ -14,10 +14,11 @@ export async function run(): Promise<void> {
     const inputs = parseInputs();
     core.info('Inputs parsed and validated successfully');
 
-    // Step 2: Determine title, body, and eventType
+    // Step 2: Determine title, body, eventType, and changes from smart defaults
     let title = inputs.title;
     let body = inputs.body;
     let eventType = inputs.eventType;
+    let smartChanges: any[] | undefined;
 
     if (inputs.eventType === 'release' || inputs.eventType === 'merge') {
       core.info(`Smart mode: ${inputs.eventType}`);
@@ -25,6 +26,7 @@ export async function run(): Promise<void> {
       title = smartDefaults.title;
       body = smartDefaults.body;
       eventType = smartDefaults.eventType;
+      smartChanges = smartDefaults.changes;
     }
 
     if (!title || !body) {
@@ -35,7 +37,7 @@ export async function run(): Promise<void> {
     const sourceConnection = inputs.sourceConnection || inferSourceConnection();
     core.info(`Source connection: ${sourceConnection}`);
 
-    // Step 4: Build changes array if changeset inputs provided
+    // Step 4: Build changes array - prioritize manual inputs, then smart defaults
     let changes: any[] | undefined;
     if (inputs.changeset) {
       const builtChanges = buildChanges(inputs.changeset);
@@ -44,6 +46,10 @@ export async function run(): Promise<void> {
         core.info('Changeset specification added to request');
         core.warning('Changeset inputs override any commits specified in body');
       }
+    } else if (smartChanges && smartChanges.length > 0) {
+      // Use changes from smart defaults if no manual changeset provided
+      changes = smartChanges;
+      core.info('Using smart default changeset specification');
     }
 
     // Step 5: Build API request
