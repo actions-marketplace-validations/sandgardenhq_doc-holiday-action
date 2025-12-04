@@ -4,8 +4,9 @@ Automatically generate release notes and documentation updates using [doc.holida
 
 ## Features
 
-- **Smart Event Detection**: Automatically handles release and PR merge events
-- **Flexible Manual Mode**: Full control over all doc.holiday API parameters
+- **Automatic Release Notes**: Automatically generates docs when releases are published
+- **Pull Request Documentation**: Automatically generates docs when PRs are merged
+- **Manual Mode**: Full control over all doc.holiday API parameters
 - **Comprehensive Changeset Support**: All 8 changeset specification types from doc.holiday API
 - **Fire-and-Forget**: Non-blocking workflow execution
 - **Built-in Retry Logic**: Handles rate limits and network failures
@@ -32,7 +33,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: sandgardenhq/doc-holiday-action@v1.0.0
+      - uses: sandgardenhq/doc-holiday-action@v1.0.1
         with:
           api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
           event-type: release
@@ -52,7 +53,7 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - uses: sandgardenhq/doc-holiday-action@v1.0.0
+      - uses: sandgardenhq/doc-holiday-action@v1.0.1
         with:
           api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
           event-type: merge
@@ -60,12 +61,12 @@ jobs:
 
 ## Usage Modes
 
-### Smart Mode: Release
+### Release
 
 Automatically generates release notes when a GitHub release is published.
 
 ```yaml
-- uses: sandgardenhq/doc-holiday-action@v1.0.0
+- uses: sandgardenhq/doc-holiday-action@v1.0.1
   with:
     api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
     event-type: release
@@ -76,12 +77,12 @@ Automatically generates release notes when a GitHub release is published.
 - Body: Release description
 - Changes: Commits in the release
 
-### Smart Mode: Merge
+### Pull Request Merged
 
 Automatically generates documentation when a PR is merged.
 
 ```yaml
-- uses: sandgardenhq/doc-holiday-action@v1.0.0
+- uses: sandgardenhq/doc-holiday-action@v1.0.1
   with:
     api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
     event-type: merge
@@ -92,12 +93,12 @@ Automatically generates documentation when a PR is merged.
 - Body: PR description
 - Changes: PR commits
 
-### Manual Mode: Full Control
+### Manual
 
 Complete control over all doc.holiday parameters.
 
 ```yaml
-- uses: sandgardenhq/doc-holiday-action@v1.0.0
+- uses: sandgardenhq/doc-holiday-action@v1.0.1
   with:
     api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
     title: "Weekly documentation update"
@@ -264,7 +265,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: sandgardenhq/doc-holiday-action@v1.0.0
+      - uses: sandgardenhq/doc-holiday-action@v1.0.1
         with:
           api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
           title: "Weekly docs update"
@@ -291,7 +292,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: sandgardenhq/doc-holiday-action@v1.0.0
+      - uses: sandgardenhq/doc-holiday-action@v1.0.1
         with:
           api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
           title: "Manual documentation request"
@@ -302,7 +303,7 @@ jobs:
 ### Multiple Publications
 
 ```yaml
-- uses: sandgardenhq/doc-holiday-action@v1.0.0
+- uses: sandgardenhq/doc-holiday-action@v1.0.1
   with:
     api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
     title: "Update all docs"
