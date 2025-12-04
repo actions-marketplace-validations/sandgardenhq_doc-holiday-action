@@ -4,8 +4,9 @@ Automatically generate release notes and documentation updates using [doc.holida
 
 ## Features
 
-- **Smart Event Detection**: Automatically handles release and PR merge events
-- **Flexible Manual Mode**: Full control over all doc.holiday API parameters
+- **Automatic Release Notes**: Automatically generates docs when releases are published
+- **Pull Request Documentation**: Automatically generates docs when PRs are merged
+- **Manual Mode**: Full control over all doc.holiday API parameters
 - **Comprehensive Changeset Support**: All 8 changeset specification types from doc.holiday API
 - **Fire-and-Forget**: Non-blocking workflow execution
 - **Built-in Retry Logic**: Handles rate limits and network failures
@@ -60,7 +61,7 @@ jobs:
 
 ## Usage Modes
 
-### Smart Mode: Release
+### Release Mode
 
 Automatically generates release notes when a GitHub release is published.
 
@@ -76,7 +77,7 @@ Automatically generates release notes when a GitHub release is published.
 - Body: Release description
 - Changes: Commits in the release
 
-### Smart Mode: Merge
+### Pull Request Merged Mode
 
 Automatically generates documentation when a PR is merged.
 
@@ -92,7 +93,7 @@ Automatically generates documentation when a PR is merged.
 - Body: PR description
 - Changes: PR commits
 
-### Manual Mode: Full Control
+### Manual Mode
 
 Complete control over all doc.holiday parameters.
 
