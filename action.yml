@@ -3,8 +3,8 @@ description: 'Automatically generate release notes and documentation using doc.h
 author: 'Sandgarden'
 
 branding:
-  icon: 'file-text'
-  color: 'blue'
+  icon: 'book-open'
+  color: 'green'
 
 inputs:
   api-token:
