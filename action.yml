@@ -1,6 +1,6 @@
 name: 'Doc Holiday Action'
 description: 'Automatically generate release notes and documentation using doc.holiday'
-author: 'Your Name or Organization'
+author: 'Sandgarden'
 
 branding:
   icon: 'file-text'
