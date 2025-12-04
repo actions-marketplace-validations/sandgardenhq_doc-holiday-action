@@ -61,7 +61,7 @@ jobs:
 
 ## Usage Modes
 
-### Release Mode
+### Release
 
 Automatically generates release notes when a GitHub release is published.
 
@@ -77,7 +77,7 @@ Automatically generates release notes when a GitHub release is published.
 - Body: Release description
 - Changes: Commits in the release
 
-### Pull Request Merged Mode
+### Pull Request Merged
 
 Automatically generates documentation when a PR is merged.
 
@@ -93,7 +93,7 @@ Automatically generates documentation when a PR is merged.
 - Body: PR description
 - Changes: PR commits
 
-### Manual Mode
+### Manual
 
 Complete control over all doc.holiday parameters.
 
