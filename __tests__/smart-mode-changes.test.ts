@@ -30,19 +30,19 @@ describe('Smart Mode Changes Bug', () => {
     jest.clearAllMocks();
   });
 
-  it('BUG: release mode does not provide changes array to API - doc.holiday must infer commits from body', async () => {
+  it('release mode should provide changes array to API', async () => {
     // Arrange
     const mockInputs: ActionInputs = {
       apiToken: 'test-token',
       eventType: 'release',
     };
 
-    // Current implementation: getSmartDefaults does NOT return changes
+    // getSmartDefaults SHOULD return changes for releases
     const mockSmartDefaults: SmartDefaults = {
       title: 'Release notes for v1.0.0',
       body: 'Release body content',
       eventType: 'release',
-      // NO changes field - that's the bug!
+      changes: [{ releases: { count: 1 } }], // Should be populated by getSmartDefaults
     };
 
     const mockResponse: DocHolidayResponse = {
@@ -61,33 +61,29 @@ describe('Smart Mode Changes Bug', () => {
     // Act
     await run();
 
-    // Assert - This test PASSES showing the bug exists
+    // Assert - Expect changes to be included in the API request
     const createJobCall = mockCreateJob.mock.calls[0];
     expect(createJobCall).toBeDefined();
 
     const apiRequest = createJobCall[1];
 
-    // BUG CONFIRMED: changes is NOT included in the API request
-    // This means doc.holiday has to guess which commits from the body text
-    expect(apiRequest.docRequest.changes).toBeUndefined();
-
-    // What we SHOULD send:
-    // changes: [{ releases: { count: 1 } }]  // or appropriate release commit range
+    // This SHOULD be included - test will FAIL until we fix the implementation
+    expect(apiRequest.docRequest.changes).toEqual([{ releases: { count: 1 } }]);
   });
 
-  it('BUG: merge mode does not provide changes array to API - doc.holiday must infer commits from body', async () => {
+  it('merge mode should provide changes array with PR commit range to API', async () => {
     // Arrange
     const mockInputs: ActionInputs = {
       apiToken: 'test-token',
       eventType: 'merge',
     };
 
-    // Current implementation: getSmartDefaults does NOT return changes
+    // getSmartDefaults SHOULD return changes for PR merges
     const mockSmartDefaults: SmartDefaults = {
       title: 'Documentation for PR #42',
       body: 'PR description',
       eventType: 'merge',
-      // NO changes field - that's the bug!
+      changes: [{ commits: { startSha: 'abc123', endSha: 'def456', includeStartCommit: true } }], // Should be populated by getSmartDefaults
     };
 
     const mockResponse: DocHolidayResponse = {
@@ -106,17 +102,15 @@ describe('Smart Mode Changes Bug', () => {
     // Act
     await run();
 
-    // Assert - This test PASSES showing the bug exists
+    // Assert - Expect changes to be included in the API request
     const createJobCall = mockCreateJob.mock.calls[0];
     expect(createJobCall).toBeDefined();
 
     const apiRequest = createJobCall[1];
 
-    // BUG CONFIRMED: changes is NOT included in the API request
-    // This means doc.holiday has to guess which PR commits from the body text
-    expect(apiRequest.docRequest.changes).toBeUndefined();
-
-    // What we SHOULD send:
-    // changes: [{ commits: { startSha: 'abc123', endSha: 'def456' } }]  // PR commit range
+    // This SHOULD be included - test will FAIL until we fix the implementation
+    expect(apiRequest.docRequest.changes).toEqual([
+      { commits: { startSha: 'abc123', endSha: 'def456', includeStartCommit: true } }
+    ]);
   });
 });
