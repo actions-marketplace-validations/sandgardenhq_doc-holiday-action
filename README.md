@@ -33,7 +33,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: sandgardenhq/doc-holiday-action@v1.0.0
+      - uses: sandgardenhq/doc-holiday-action@v1.0.1
         with:
           api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
           event-type: release
@@ -53,7 +53,7 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - uses: sandgardenhq/doc-holiday-action@v1.0.0
+      - uses: sandgardenhq/doc-holiday-action@v1.0.1
         with:
           api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
           event-type: merge
@@ -66,7 +66,7 @@ jobs:
 Automatically generates release notes when a GitHub release is published.
 
 ```yaml
-- uses: sandgardenhq/doc-holiday-action@v1.0.0
+- uses: sandgardenhq/doc-holiday-action@v1.0.1
   with:
     api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
     event-type: release
@@ -82,7 +82,7 @@ Automatically generates release notes when a GitHub release is published.
 Automatically generates documentation when a PR is merged.
 
 ```yaml
-- uses: sandgardenhq/doc-holiday-action@v1.0.0
+- uses: sandgardenhq/doc-holiday-action@v1.0.1
   with:
     api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
     event-type: merge
@@ -98,7 +98,7 @@ Automatically generates documentation when a PR is merged.
 Complete control over all doc.holiday parameters.
 
 ```yaml
-- uses: sandgardenhq/doc-holiday-action@v1.0.0
+- uses: sandgardenhq/doc-holiday-action@v1.0.1
   with:
     api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
     title: "Weekly documentation update"
@@ -265,7 +265,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: sandgardenhq/doc-holiday-action@v1.0.0
+      - uses: sandgardenhq/doc-holiday-action@v1.0.1
         with:
           api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
           title: "Weekly docs update"
@@ -292,7 +292,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: sandgardenhq/doc-holiday-action@v1.0.0
+      - uses: sandgardenhq/doc-holiday-action@v1.0.1
         with:
           api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
           title: "Manual documentation request"
@@ -303,7 +303,7 @@ jobs:
 ### Multiple Publications
 
 ```yaml
-- uses: sandgardenhq/doc-holiday-action@v1.0.0
+- uses: sandgardenhq/doc-holiday-action@v1.0.1
   with:
     api-token: ${{ secrets.DOC_HOLIDAY_TOKEN }}
     title: "Update all docs"
