@@ -1,0 +1,103 @@
+name: 'Doc Holiday Action'
+description: 'Automatically generate release notes and documentation using doc.holiday'
+author: 'Your Name or Organization'
+
+branding:
+  icon: 'file-text'
+  color: 'blue'
+
+inputs:
+  api-token:
+    description: 'Doc.holiday API token (store in GitHub secrets)'
+    required: true
+
+  event-type:
+    description: 'Event type: release, merge, or custom (default: custom)'
+    required: false
+    default: 'custom'
+
+  title:
+    description: 'Job title (required in manual/custom mode)'
+    required: false
+
+  body:
+    description: 'Natural language request or commit specification (required in manual/custom mode)'
+    required: false
+
+  publications:
+    description: 'Comma-separated publication names/IDs'
+    required: false
+
+  source-connection:
+    description: 'Connection name/ID (defaults to current repository owner/repo)'
+    required: false
+
+  labels:
+    description: 'Comma-separated labels'
+    required: false
+
+  comments:
+    description: 'Additional instructions (multiline supported)'
+    required: false
+
+  relevant-links:
+    description: 'Comma-separated URLs for additional context'
+    required: false
+
+  releases-count:
+    description: 'Number of recent releases to include'
+    required: false
+
+  time-range-start:
+    description: 'Time range start (ISO 8601 timestamp)'
+    required: false
+
+  time-range-end:
+    description: 'Time range end (ISO 8601 timestamp)'
+    required: false
+
+  commits-count:
+    description: 'Number of recent commits'
+    required: false
+
+  commits-since-sha:
+    description: 'Start from specific commit SHA'
+    required: false
+
+  commits-shas:
+    description: 'Comma-separated list of specific commit SHAs'
+    required: false
+
+  commits-start-sha:
+    description: 'Commit range start SHA'
+    required: false
+
+  commits-end-sha:
+    description: 'Commit range end SHA'
+    required: false
+
+  commits-include-start:
+    description: 'Include start commit in range (true/false)'
+    required: false
+
+  tags-start:
+    description: 'Start tag'
+    required: false
+
+  tags-end:
+    description: 'End tag'
+    required: false
+
+outputs:
+  job-id:
+    description: 'The doc.holiday job ID'
+
+  job-state:
+    description: 'Job state from creation response (typically "requested")'
+
+  job-url:
+    description: 'URL to view job in doc.holiday UI'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
